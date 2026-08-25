@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="螺江茗茶 - 福州茉莉花茶产品画册">
+<title>螺江茗茶 · 产品画册</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --green:#3a5a3a; --green-light:#4a7a4a; --green-mid:#6b8e5a;
+  --bg:#f6f1e7; --card:#fff; --text:#2f3b2f; --text-light:#4a5a4a;
+  --border:#eee8d5; --gray:#8a8a7a;
+}
+body {
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--text); font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img { display:block; }
+.hidden { display:none !important; }
+
+/* ===== 顶部导航栏 ===== */
+.navbar {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:var(--green); color:#fff;
+  display:flex; align-items:center; justify-content:space-around;
+  height:50px; box-shadow:0 2rpx 8px rgba(0,0,0,0.1);
+}
+.navbar-item {
+  flex:1; text-align:center; font-size:15px; opacity:0.6;
+  padding:8px 0; cursor:pointer; transition:opacity 0.2s;
+}
+.navbar-item.active { opacity:1; font-weight:600; }
+.navbar-item .nav-icon { font-size:16px; display:block; line-height:1; margin-bottom:2px; }
+
+/* ===== 页面容器 ===== */
+.page { display:none; padding-top:50px; padding-bottom:60px; }
+.page.active { display:block; }
+
+/* ===== 通用 ===== */
+.section-title {
+  font-size:16px; font-weight:600; color:var(--green);
+  padding:20px 16px 12px;
+}
+.card {
+  background:var(--card); border-radius:12px; margin:0 12px 12px;
+  padding:16px; box-shadow:0 2px 12px rgba(58,90,58,0.05);
+}
+.footer {
+  text-align:center; font-size:12px; color:#b0a890;
+  padding:20px 0 10px;
+}
+
+/* ===== 首页 ===== */
+.hero {
+  position:relative; height:260px; overflow:hidden;
+  background:linear-gradient(135deg,#2f5a3a 0%,#4a7a4a 60%,#6b8e5a 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.hero-bg { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
+.hero-mask {
+  position:absolute; top:0; left:0; right:0; bottom:0;
+  background:linear-gradient(180deg,rgba(30,50,30,0.45) 0%,rgba(30,50,30,0.6) 100%);
+}
+.hero-content { position:relative; text-align:center; color:#fff; z-index:1; }
+.hero-tag { font-size:13px; letter-spacing:4px; opacity:0.85; margin-bottom:12px; }
+.hero-title { font-size:36px; font-weight:700; letter-spacing:3px; }
+.hero-slogan { font-size:16px; margin-top:10px; opacity:0.95; }
+.hero-sub { font-size:12px; margin-top:6px; opacity:0.7; letter-spacing:2px; }
+
+.brand-row { display:flex; align-items:flex-start; }
+.brand-logo-img {
+  flex-shrink:0; width:48px; height:48px; margin-right:14px;
+  background:transparent; object-fit:contain;
+}
+.brand-text { flex:1; font-size:14px; line-height:1.8; color:var(--text-light); }
+
+.company-banner {
+  position:relative; height:140px; border-radius:8px; overflow:hidden; margin-bottom:14px;
+}
+.company-img { width:100%; height:100%; object-fit:cover; }
+.company-banner-tip {
+  position:absolute; bottom:8px; right:10px; font-size:11px;
+  color:#fff; background:rgba(58,90,58,0.6); padding:3px 9px; border-radius:10px;
+}
+.company-text { font-size:14px; line-height:1.85; color:var(--text-light); text-indent:2em; }
+.company-stats {
+  display:flex; margin-top:18px; padding-top:16px; border-top:1px solid var(--border);
+}
+.stat-item { flex:1; text-align:center; }
+.stat-num { font-size:22px; font-weight:700; color:var(--green); }
+.stat-label { font-size:12px; color:var(--gray); margin-top:4px; }
+
+.entry {
+  display:flex; align-items:center; background:var(--card); border-radius:10px;
+  padding:16px; margin:0 12px 10px; box-shadow:0 2px 12px rgba(58,90,58,0.05);
+  cursor:pointer;
+}
+.entry-info { flex:1; }
+.entry-title { font-size:16px; font-weight:600; color:var(--text); }
+.entry-desc { font-size:12px; color:var(--gray); margin-top:4px; }
+.entry-arrow { font-size:24px; color:#b8c5a8; line-height:1; }
+
+/* ===== 产品列表页 ===== */
+.p-head { padding:16px 16px 8px; }
+.p-head-title { font-size:18px; font-weight:600; color:var(--green); }
+.p-head-desc { font-size:12px; color:var(--gray); margin-top:4px; }
+.series-bar {
+  display:flex; gap:8px; padding:0 16px 12px; overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.series-bar::-webkit-scrollbar { display:none; }
+.series-item {
+  flex-shrink:0; font-size:13px; color:var(--green); background:#eaf0e3;
+  padding:6px 16px; border-radius:20px; cursor:pointer; transition:all 0.2s;
+}
+.series-item.active { background:var(--green); color:#fff; }
+.product-list { padding:0 12px; }
+.product-card {
+  background:var(--card); border-radius:12px; margin-bottom:12px;
+  overflow:hidden; box-shadow:0 2px 12px rgba(58,90,58,0.05);
+  cursor:pointer; transition:transform 0.15s;
+}
+.product-card:active { transform:scale(0.98); }
+.product-cover { position:relative; height:200px; overflow:hidden; }
+.cover-img { width:100%; height:100%; object-fit:cover; }
+.cover-series {
+  position:absolute; top:10px; left:10px; font-size:11px; color:#fff;
+  background:rgba(58,90,58,0.7); padding:3px 10px; border-radius:12px;
+}
+.product-info { padding:14px; }
+.product-name { font-size:16px; font-weight:600; color:var(--text); }
+.product-intro {
+  font-size:13px; color:var(--gray); margin-top:6px; line-height:1.6;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.product-action {
+  display:flex; align-items:center; justify-content:space-between; margin-top:10px;
+}
+.product-spec { font-size:12px; color:var(--green); background:#eaf0e3; padding:3px 10px; border-radius:10px; }
+.product-more { font-size:12px; color:var(--green); }
+.empty { text-align:center; color:var(--gray); padding:40px 0; }
+
+/* ===== 产品详情页 ===== */
+.gallery { position:relative; height:350px; overflow:hidden; }
+.gallery-img { width:100%; height:100%; object-fit:cover; cursor:pointer; }
+.gallery-count {
+  position:absolute; bottom:10px; right:12px; font-size:12px;
+  color:#fff; background:rgba(0,0,0,0.4); padding:3px 10px; border-radius:12px;
+}
+.title-card { padding:16px; background:#fff; margin:0 12px 12px; border-radius:12px; box-shadow:0 2px 12px rgba(58,90,58,0.05); }
+.title-series { font-size:12px; color:var(--green); background:#eaf0e3; display:inline-block; padding:3px 10px; border-radius:10px; }
+.title-name { font-size:22px; font-weight:700; color:var(--text); margin-top:8px; }
+.title-yunci { display:flex; align-items:center; gap:8px; margin-top:10px; }
+.yunci-label { font-size:12px; color:var(--gray); }
+.yunci-value {
+  font-size:14px; font-weight:600; color:var(--green); background:#eaf0e3;
+  padding:4px 14px; border-radius:16px;
+}
+.intro-text { font-size:14px; line-height:1.85; color:var(--text-light); }
+.advantage-item { display:flex; align-items:flex-start; margin-bottom:12px; }
+.advantage-item:last-child { margin-bottom:0; }
+.advantage-num {
+  flex-shrink:0; width:22px; height:22px; border-radius:50%;
+  background:var(--green); color:#fff; font-size:12px;
+  display:flex; align-items:center; justify-content:center; margin-right:10px;
+}
+.advantage-text { flex:1; font-size:14px; line-height:1.7; color:var(--text-light); }
+.spec-row { display:flex; border-bottom:1px solid var(--border); padding:10px 0; }
+.spec-row:last-child { border-bottom:none; }
+.spec-label { flex-shrink:0; width:90px; font-size:13px; color:var(--gray); }
+.spec-value { flex:1; font-size:13px; color:var(--text); }
+.bottom-note { text-align:center; padding:24px 16px 16px; }
+.note-line { font-size:12px; color:#b0a890; }
+.note-tip { font-size:13px; color:var(--green); margin-top:6px; }
+
+/* ===== 关于页 ===== */
+.about-banner {
+  position:relative; height:220px; overflow:hidden;
+  background:linear-gradient(135deg,#2f5a3a 0%,#4a7a4a 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.about-banner-bg { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0.3; }
+.about-banner-content { position:relative; z-index:1; text-align:center; color:#fff; }
+.about-logo { width:80px; height:80px; object-fit:contain; margin:0 auto 10px; }
+.about-name { font-size:24px; font-weight:700; }
+.about-slogan { font-size:12px; opacity:0.7; margin-top:6px; letter-spacing:2px; }
+.info-row { display:flex; padding:12px 0; border-bottom:1px solid var(--border); }
+.info-row:last-child { border-bottom:none; }
+.info-label { flex-shrink:0; width:80px; font-size:13px; color:var(--gray); }
+.info-value { flex:1; font-size:14px; color:var(--text); }
+.info-note { font-size:12px; color:var(--gray); margin-top:8px; }
+.sec-text { font-size:14px; line-height:1.85; color:var(--text-light); }
+
+/* ===== 返回按钮 ===== */
+.back-btn {
+  position:fixed; top:60px; left:12px; z-index:101;
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(255,255,255,0.85); color:var(--green);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* ===== 图片预览 ===== */
+.viewer-mask {
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:200;
+  background:rgba(0,0,0,0.9); display:flex; align-items:center; justify-content:center;
+}
+.viewer-img { max-width:95vw; max-height:90vh; object-fit:contain; }
+.viewer-close {
+  position:absolute; top:15px; right:15px; width:36px; height:36px;
+  border-radius:50%; background:rgba(255,255,255,0.2); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<div class="navbar">
+  <div class="navbar-item active" data-page="home" onclick="switchPage('home')">
+    <span class="nav-icon">⌂</span>首页
+  </div>
+  <div class="navbar-item" data-page="products" onclick="switchPage('products')">
+    <span class="nav-icon">🍵</span>产品
+  </div>
+  <div class="navbar-item" data-page="about" onclick="switchPage('about')">
+    <span class="nav-icon">ⓘ</span>关于
+  </div>
+</div>
+
+<!-- ===== 首页 ===== -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <img class="hero-bg" src="assets/banner/jasmine1.png" alt="">
+    <div class="hero-mask"></div>
+    <div class="hero-content">
+      <div class="hero-tag">螺 · 江 · 茗 · 茶</div>
+      <div class="hero-title">螺江茗茶</div>
+      <div class="hero-slogan">一杯茉莉 一生莫离</div>
+      <div class="hero-sub">千年古镇 帝师之乡</div>
+    </div>
+  </div>
+
+  <div class="section-title">品牌介绍</div>
+  <div class="card">
+    <div class="brand-row">
+      <img class="brand-logo-img" src="assets/banner/logo_brand.png" alt="螺江Logo">
+      <div class="brand-text">螺江茗茶位于"千年古镇、帝师之乡"螺洲镇，是一家将传统作茶工艺与现代科技相结合的综合经营茶叶企业。公司拥有标准化花茶生产车间、原料仓与成品仓共计8600平方米，百亩茉莉花基地坐落于闽侯县竹岐乡，始终致力于窨制一罐好茶。</div>
+    </div>
+  </div>
+
+  <div class="section-title">企业简介</div>
+  <div class="card">
+    <div class="company-banner">
+      <img class="company-img" src="assets/banner/garden.jpg" alt="螺江茉莉生态园">
+      <div class="company-banner-tip">螺江茉莉生态园</div>
+    </div>
+    <div class="company-banner">
+      <img class="company-img" src="assets/banner/factory.jpg" alt="螺江茗茶·公司实景">
+      <div class="company-banner-tip">螺江茗茶·公司实景</div>
+    </div>
+    <div class="company-text">福建螺江茶业有限公司前身为"螺洲茶叶加工厂"，专注福州茉莉花茶。公司注重产教融合，联合福建省农林大学园艺学院、福州市农业科技研究所开展产学研合作，以标准化、规模化推动福州茉莉花茶发展。产品涵盖"福州茉莉花茶""茉莉红茶"等，分罐装与礼盒装两大系列，拳头产品"帝师言"经九次窨制而成。</div>
+    <div class="company-stats">
+      <div class="stat-item">
+        <div class="stat-num">8600</div>
+        <div class="stat-label">㎡生产车间</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">200</div>
+        <div class="stat-label">亩茉莉花基地</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">个奖项</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">产品画册</div>
+  <div class="entry" onclick="switchPage('products')">
+    <div class="entry-info">
+      <div class="entry-title">查看全部茶叶产品</div>
+      <div class="entry-desc">罐装系列 · 礼盒装系列</div>
+    </div>
+    <div class="entry-arrow">›</div>
+  </div>
+
+  <div class="entry" onclick="switchPage('about')">
+    <div class="entry-info">
+      <div class="entry-title">关于我们</div>
+      <div class="entry-desc">公司名称、地址与联系方式</div>
+    </div>
+    <div class="entry-arrow">›</div>
+  </div>
+
+  <div class="footer">— 螺江茗茶 · 一杯茉莉一生莫离 —</div>
+</div>
+
+<!-- ===== 产品列表页 ===== -->
+<div class="page" id="page-products">
+  <div class="p-head">
+    <div class="p-head-title">茶叶产品画册</div>
+    <div class="p-head-desc">点击产品查看多图详情、介绍与规格</div>
+  </div>
+  <div class="series-bar" id="seriesBar"></div>
+  <div class="product-list" id="productList"></div>
+  <div class="footer" id="productFooter"></div>
+</div>
+
+<!-- ===== 产品详情页 ===== -->
+<div class="page" id="page-detail">
+  <div class="back-btn" onclick="switchPage('products')">‹</div>
+  <div id="detailContent"></div>
+</div>
+
+<!-- ===== 关于页 ===== -->
+<div class="page" id="page-about">
+  <div class="about-banner">
+    <img class="about-banner-bg" src="assets/banner/jasmine2.png" alt="">
+    <div class="about-banner-content">
+      <img class="about-logo" src="assets/banner/logo_white.png" alt="Logo">
+      <div class="about-name">福建螺江茶业有限公司</div>
+      <div class="about-slogan">千年古镇 · 帝师之乡</div>
+    </div>
+  </div>
+
+  <div class="section-title">公司实景</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <img src="assets/banner/factory.jpg" style="width:100%;height:200px;object-fit:cover;" alt="公司实景">
+    <div style="padding:8px 14px;font-size:12px;color:var(--gray);">螺江茗茶·公司实景</div>
+  </div>
+
+  <div class="section-title">公司信息</div>
+  <div class="card">
+    <div class="info-row">
+      <div class="info-label">公司名称</div>
+      <div class="info-value">福建螺江茶业有限公司</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">公司地址</div>
+      <div class="info-value">福建省福州市螺洲镇天福工业区</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">微信号</div>
+      <div class="info-value">YQ466088204（螺江泉子哥）</div>
+    </div>
+    <div class="info-note">* 以上信息仅供查看展示</div>
+  </div>
+
+  <div class="section-title">公司简介</div>
+  <div class="card">
+    <div class="sec-text">福建螺江茶业有限公司位于"千年古镇、帝师之乡"螺洲镇天福工业区，前身为早年间创办的"螺洲茶叶加工厂"。螺江茉莉花茶是一家将传统作茶工艺模式与现代科技互联网电子商务发展模式相结合的综合经营茶叶企业，公司拥有宽阔的标准化花茶生产车间、原料仓和成品仓，面积共计8600平方米。</div>
+  </div>
+
+  <div class="section-title">茉莉花基地与产学研</div>
+  <div class="card">
+    <div class="sec-text">螺江茗茶拥有百亩茉莉花基地，位于山清水秀、空气清鲜、土壤肥沃的闽侯县竹岐乡，每年提供充足的茉莉鲜花，确保花茶的品质和产量。公司注重产教融合，联合福建省农林大学园艺学院、福州市农业科技研究所等高校开展全方位产学研合作，深入落实"三茶统筹"重要指示，始终把发展茶科技作为茶产业发展的核心关键，不断提升茶产业"含金量"。</div>
+  </div>
+
+  <div class="section-title">企业荣誉</div>
+  <div class="card">
+    <div class="sec-text">今年以来，螺江茗茶相继亮相各地"福州茉莉花茶神州行"推介会，全面推介和展示福州茉莉花茶产业和茶文化的独特魅力。企业荣获"张天福杯"暨第21届"闽茶杯"（秋季）单瓣茉莉花茶金奖、第二届"五里亭杯"茶王争霸赛针型茉莉花茶金奖，彰显在福州茉莉花茶领域的高质量发展。</div>
+  </div>
+
+  <div class="section-title">品牌愿景</div>
+  <div class="card">
+    <div class="sec-text">螺江茗茶，始终致力于为社会奉献质量优异、品牌卓越、文化领先的茉莉花茶。螺江茗茶用匠心之功，窨制一罐好茶，让茉莉花香，魂染一方水土，让螺洲文脉，随悠悠茶香，溢美流芳。"一杯茉莉，一生莫离"。</div>
+  </div>
+
+  <div class="footer">— 螺江茗茶 · 一杯茉莉一生莫离 —</div>
+</div>
+
+<!-- ===== 图片预览器 ===== -->
+<div class="viewer-mask hidden" id="viewerMask" onclick="closeViewer()">
+  <img class="viewer-img" id="viewerImg" src="" alt="">
+  <div class="viewer-close">×</div>
+</div>
+
+<script>
+// ===== 产品数据 =====
+var IMG = 'assets/products';
+var PRODUCTS = [
+  { id:1, name:'至尊玉蝶', series:'罐装', cover:IMG+'/p1.png', images:[IMG+'/p1.png'], intro:'至尊玉蝶为螺江茗茶高端针型茉莉花茶。精选福鼎大毫全芽银针为茶坯，经烘青工艺制成特种茶坯，配以福州本地一级花田优质三伏茉莉鲜花，经十二次窨制而成。干茶芽叶舒展如玉蝶，汤色嫩黄明亮，茉莉花香鲜灵，茶味醇爽回甘。', yunCi:'十二次窨制', advantages:['精选福鼎大毫全芽银针，茶坯细嫩','福州本地一级花田三伏茉莉鲜花入窨','十二次窨制，工艺繁复','芽叶舒展如玉蝶，外形优美','花香鲜灵，茶味醇爽回甘'], specs:[{label:'净含量',value:'50克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'福鼎大毫全芽银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'十二次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:2, name:'单瓣茉莉针王', series:'罐装', cover:IMG+'/p2.png', images:[IMG+'/p2.png'], intro:'单瓣茉莉针王选用螺江茗茶自有基地培育的特种单瓣茉莉鲜花窨制。精选福鼎大毫银针为茶坯，经烘青工艺制成特种茶坯，以单瓣茉莉鲜花经九次深窨而成。单瓣茉莉香气清高幽长，针芽挺直匀整，汤色嫩黄明亮，花香鲜灵持久，滋味醇爽。', yunCi:'九次深窨', advantages:['自有基地特种单瓣茉莉鲜花窨制','福鼎大毫银针茶坯，针芽挺直匀整','九次深窨层层凝香','花香鲜灵持久，滋味醇爽','曾获"闽茶杯"单瓣茉莉花茶金奖'], specs:[{label:'净含量',value:'50克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'螺江自有基地特种单瓣茉莉'},{label:'窨制工艺',value:'九次深窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:3, name:'茉莉金龙毫', series:'罐装', cover:IMG+'/p3.png', images:[IMG+'/p3.png'], intro:'茉莉金龙毫精选福鼎大毫银针嫩芽为茶坯，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，经七次细窨逐层凝香而成。毫芽金黄，针芽肥壮，汤色嫩黄明亮，茉莉花香浓郁，滋味鲜醇。', yunCi:'七次细窨', advantages:['福鼎大毫银针嫩芽茶坯','七次细窨逐层凝香','毫芽金黄，针芽肥壮','花香浓郁，滋味鲜醇'], specs:[{label:'净含量',value:'50克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'福鼎大毫银针嫩芽'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'七次细窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:4, name:'茉莉龙舌', series:'罐装', cover:IMG+'/p4.png', images:[IMG+'/p4.png'], intro:'茉莉龙舌为卷曲形茉莉花茶，茶坯经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，三倍用花量、九次精窨反复提香而成。干茶卷曲如龙舌，汤色黄绿明亮，花香馥郁，滋味醇厚回甘。', yunCi:'九次精窨', advantages:['卷曲形特种茶坯','三倍用花量，九次精窨反复提香','干茶卷曲如龙舌，外形别致','花香馥郁，醇厚回甘'], specs:[{label:'净含量',value:'50克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'烘青绿茶特种茶坯'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'九次精窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:5, name:'茉莉龙珠', series:'罐装', cover:IMG+'/p5.png', images:[IMG+'/p5.png'], intro:'茉莉龙珠为珠形茉莉花茶，茶坯揉制成珠，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，六次窨制反复提香而成。干茶颗粒圆结如珠，汤色黄绿明亮，花香清雅，滋味醇爽。', yunCi:'六次窨制', advantages:['珠形茶坯，颗粒圆结如珠','六次窨制反复提香','花香清雅，滋味醇爽','耐冲泡'], specs:[{label:'净含量',value:'100克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'烘青绿茶特种茶坯'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'六次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:6, name:'茉莉大白毫', series:'罐装', cover:IMG+'/p6.png', images:[IMG+'/p6.png'], intro:'茉莉大白毫精选福鼎大毫肥壮芽叶为茶坯，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，六次窨制反复提香而成。白毫显露，芽叶肥壮，汤色嫩黄，花香鲜浓，滋味醇厚。', yunCi:'六次窨制', advantages:['福鼎大毫肥壮芽叶茶坯','白毫显露，芽叶肥壮','六次窨制反复提香','花香鲜浓，滋味醇厚'], specs:[{label:'净含量',value:'100克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'福鼎大毫肥壮芽叶'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'六次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:7, name:'茉莉红茶', series:'罐装', cover:IMG+'/p7.png', images:[IMG+'/p7.png'], intro:'茉莉红茶以优质红茶为茶坯，配以福州本地新鲜茉莉鲜花，六次窨制反复提香而成。红茶的醇厚温润与茉莉的清雅花香相融，汤色红艳透亮，花香馥郁，滋味醇和甘甜，温润不燥。', yunCi:'六次窨制', advantages:['优质红茶茶坯，醇厚温润','六次窨制反复提香','红茶醇厚与茉莉清雅花香相融','汤色红艳，滋味醇和甘甜'], specs:[{label:'净含量',value:'100克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'优质红茶'},{label:'窨花鲜花',value:'福州本地茉莉鲜花'},{label:'窨制工艺',value:'六次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:8, name:'茉莉龙条', series:'罐装', cover:IMG+'/p8.png', images:[IMG+'/p8.png'], intro:'茉莉龙条为条形茉莉花茶，茶坯揉捻成条，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，四次窨制反复提香而成。干茶条索紧结，汤色黄绿明亮，花香浓郁，滋味醇爽。', yunCi:'四次窨制', advantages:['条形茶坯，条索紧结','四次窨制反复提香','花香浓郁，滋味醇爽'], specs:[{label:'净含量',value:'125克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'烘青绿茶特种茶坯'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'四次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:9, name:'茉莉银毫', series:'罐装', cover:IMG+'/p9.png', images:[IMG+'/p9.png'], intro:'茉莉银毫精选福鼎大毫银毫嫩芽为茶坯，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，四次窨制反复提香而成。银毫披露，芽叶匀整，汤色嫩黄，花香清高，滋味鲜爽。', yunCi:'四次窨制', advantages:['福鼎大毫银毫嫩芽茶坯','银毫披露，芽叶匀整','四次窨制反复提香','花香清高，滋味鲜爽'], specs:[{label:'净含量',value:'125克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'福鼎大毫银毫嫩芽'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'四次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:10, name:'茉莉小金针', series:'罐装', cover:IMG+'/p10.png', images:[IMG+'/p10.png'], intro:'茉莉小金针甄选春分前后采摘福建小金针，经烘青工艺制成特种芽胚，与福州本地一级花田优质三伏茉莉鲜花进行传统手工窨制，六次精窨反复提香而成。针芽细小金黄，汤色嫩黄明亮，花香清雅，滋味鲜醇。', yunCi:'六次精窨', advantages:['春分前后采摘福建小金针茶坯','针芽细小金黄','一级花田三伏茉莉鲜花窨制','六次精窨反复提香，花香清雅'], specs:[{label:'净含量',value:'100克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'福建小金针嫩芽'},{label:'窨花鲜花',value:'福州本地一级花田三伏茉莉鲜花'},{label:'窨制工艺',value:'六次精窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:11, name:'茉莉银针', series:'罐装', cover:IMG+'/p11.png', images:[IMG+'/p11.png'], intro:'茉莉银针精选福鼎大毫全芽银针为茶坯，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，七次精窨反复提香而成。针芽挺直如银，白毫显露，汤色嫩黄明亮，花香鲜灵，滋味醇爽回甘。', yunCi:'七次精窨', advantages:['福鼎大毫全芽银针茶坯','针芽挺直如银，白毫显露','七次精窨反复提香','花香鲜灵，醇爽回甘'], specs:[{label:'净含量',value:'50克'},{label:'包装形式',value:'罐装'},{label:'茶坯',value:'福鼎大毫全芽银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'七次精窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:12, name:'单瓣茉莉针王（礼盒装）', series:'礼盒装', cover:IMG+'/p12.png', images:[IMG+'/p12.png'], intro:'单瓣茉莉针王礼盒装，选用螺江茗茶自有基地特种单瓣茉莉鲜花窨制。精选福鼎大毫银针为茶坯，经烘青工艺制成特种茶坯，以单瓣茉莉鲜花经九次深窨而成。单瓣茉莉香气清高幽长，针芽挺直匀整，汤色嫩黄明亮，花香鲜灵持久。礼盒雅致，宜礼宜藏。', yunCi:'九次深窨', advantages:['自有基地特种单瓣茉莉鲜花窨制','福鼎大毫银针茶坯，针芽挺直匀整','九次深窨层层凝香','曾获"闽茶杯"单瓣茉莉花茶金奖','礼盒包装，宜礼宜藏'], specs:[{label:'净含量',value:'30克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'螺江自有基地特种单瓣茉莉'},{label:'窨制工艺',value:'九次深窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:13, name:'玉蝴蝶', series:'礼盒装', cover:IMG+'/p13.png', images:[IMG+'/p13.png'], intro:'玉蝴蝶为螺江茗茶礼盒系列针型茉莉花茶。精选福鼎大毫银针为茶坯，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，八次窨制而成。干茶舒展如蝶，汤色嫩黄，花香鲜灵，滋味醇爽。礼盒雅致，馈赠佳选。', yunCi:'八次窨制', advantages:['福鼎大毫银针茶坯','干茶舒展如蝶，外形优美','八次窨制，花香鲜灵','礼盒雅致，馈赠佳选'], specs:[{label:'净含量',value:'30克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'八次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:14, name:'帝师言', series:'礼盒装', cover:IMG+'/p14.png', images:[IMG+'/p14.png',IMG+'/p26.png'], intro:'螺江茗茶拳头产品"帝师言"。精选春分前的福鼎大毫全芽银针与绿茶银针为原料，经烘青工艺制成特种茶坯，再挑选针芽相对更匀称的茶芽为窨花茶坯。选用福州本地一级花田优质三伏茉莉鲜花，自小暑节气起窨，直至白露节气前完窨，历时两个月、九窨一提。既有高山绿茶浓郁爽口的天然茶味，又饱含福州特色茉莉花的鲜灵冰糖香气，馥郁持久、清冽浓郁。礼盒装宜礼宜藏。', yunCi:'九窨一提', advantages:['精选春分前福鼎大毫全芽银针与绿茶银针','福州本地一级花田优质三伏茉莉鲜花入窨','小暑起窨至白露前完窨，历时两月九窨一提','高山绿茶天然茶味与茉莉鲜灵冰糖香气交融','馥郁持久、清冽浓郁，礼盒装宜礼宜藏'], specs:[{label:'净含量',value:'30克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫全芽银针、绿茶银针'},{label:'窨花鲜花',value:'福州本地一级花田三伏茉莉'},{label:'窨制工艺',value:'九窨一提'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:15, name:'茉莉香语', series:'礼盒装', cover:IMG+'/p15.png', images:[IMG+'/p15.png'], intro:'茉莉香语为螺江茗茶礼盒系列茉莉花茶。精选福鼎大毫银针为茶坯，经烘青工艺制成特种茶坯，配以福州本地优质三伏茉莉鲜花，九次精窨反复提香而成。花香温柔悠长，汤色嫩黄，滋味醇爽。礼盒雅致，自饮馈赠皆宜。', yunCi:'九次精窨', advantages:['福鼎大毫银针茶坯','九次精窨反复提香','花香温柔悠长','礼盒雅致，自饮馈赠皆宜'], specs:[{label:'净含量',value:'30克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'九次精窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:16, name:'螺江香茗', series:'礼盒装', cover:IMG+'/p16.png', images:[IMG+'/p16.png'], intro:'螺江香茗为螺江茗茶精巧礼盒系列茉莉花茶。精选福鼎大毫银针为茶坯，配以福州本地优质三伏茉莉鲜花，正花正窨、九窨一提而成。小份精装，花香清雅，滋味醇爽，便于品鉴与分享。', yunCi:'九窨一提', advantages:['福鼎大毫银针茶坯','正花正窨，九窨一提','小份精装，便于品鉴分享','花香清雅，滋味醇爽'], specs:[{label:'净含量',value:'15克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'九窨一提'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:17, name:'吾福临门', series:'礼盒装', cover:IMG+'/p17.png', images:[IMG+'/p17.png'], intro:'吾福临门为螺江茗茶节庆礼盒系列茉莉花茶，取"五福临门"吉意。精选福鼎大毫银针为茶坯，配以福州本地优质三伏茉莉鲜花，五次窨制反复提香而成。大份量礼盒，花香浓郁，滋味醇厚，节庆馈赠佳选。', yunCi:'五次窨制', advantages:['取"五福临门"吉意，节庆主题','福鼎大毫银针茶坯','五次窨制反复提香','大份量礼盒，节庆馈赠佳选'], specs:[{label:'净含量',value:'150克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'五次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:18, name:'一岱文宗', series:'礼盒装', cover:IMG+'/p18.png', images:[IMG+'/p18.png'], intro:'一岱文宗为螺江茗茶文化礼盒系列茉莉花茶。精选福鼎大毫银针为茶坯，配以福州本地优质三伏茉莉鲜花，九次精窨反复提香而成。承螺洲文脉，以茶载道，花香清雅，滋味醇爽。礼盒文化气息浓郁，雅致馈赠。', yunCi:'九次精窨', advantages:['承螺洲文脉，以茶载道','福鼎大毫银针茶坯','九次精窨反复提香','文化礼盒，雅致馈赠'], specs:[{label:'净含量',value:'30克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'九次精窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:19, name:'榕情蜜莉', series:'礼盒装', cover:IMG+'/p19.png', images:[IMG+'/p19.png'], intro:'榕情蜜莉为螺江茗茶礼盒系列茉莉花茶，"榕"取福州之意。精选福建小金针为茶坯，经烘青工艺制成特种芽胚，与福州本地一级花田优质三伏茉莉鲜花传统手工窨制，七次精窨反复提香而成。花香馥郁带蜜韵，汤色嫩黄，滋味甘甜醇厚。礼盒温馨，馈赠传情。', yunCi:'七次精窨', advantages:['"榕"取福州之意，主题鲜明','福建小金针茶坯','一级花田三伏茉莉鲜花窨制','七次精窨反复提香，甘甜醇厚'], specs:[{label:'净含量',value:'60克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福建小金针'},{label:'窨花鲜花',value:'福州本地一级花田三伏茉莉鲜花'},{label:'窨制工艺',value:'七次精窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:20, name:'荣耀一号', series:'礼盒装', cover:IMG+'/p20.png', images:[IMG+'/p20.png'], intro:'荣耀一号为螺江茗茶高端礼盒系列茉莉花茶。精选福鼎大毫全芽银针为茶坯，经烘青工艺制成特种茶坯，配以福州本地一级花田优质三伏茉莉鲜花，七次细窨而成。针芽匀整，花香鲜灵浓郁，滋味醇厚回甘。高端礼盒，尊贵馈赠。', yunCi:'七次细窨', advantages:['福鼎大毫全芽银针茶坯','一级花田三伏茉莉鲜花窨制','七次细窨，针芽匀整','高端礼盒，尊贵馈赠'], specs:[{label:'净含量',value:'45克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫全芽银针'},{label:'窨花鲜花',value:'福州本地一级花田三伏茉莉'},{label:'窨制工艺',value:'七次细窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:21, name:'九逢知己', series:'礼盒装', cover:IMG+'/p21.png', images:[IMG+'/p21.png'], intro:'九逢知己为螺江茗茶礼盒系列拳头产品，与"帝师言"同源同艺。精选春分前福鼎大毫全芽银针与绿茶银针为茶坯，经烘青工艺制成特种茶坯，挑匀称茶芽窨花。选用福州本地一级花田优质三伏茉莉鲜花，九次精窨反复提香而成。一杯在手，既有高山绿茶浓郁爽口之天然茶味，又饱含福州茉莉鲜灵冰糖香气，"一杯茉莉，一生莫离"，知己对饮，茶香悠长。礼盒装宜礼宜藏。', yunCi:'九次精窨', advantages:['与"帝师言"同源同艺，茶坯精选匀称针芽','福州本地一级花田优质三伏茉莉鲜花入窨','九次精窨反复提香','绿茶爽口茶味与茉莉鲜灵冰糖香交融','知己对饮，馥郁悠长，礼盒装宜礼宜藏'], specs:[{label:'净含量',value:'60克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫全芽银针、绿茶银针'},{label:'窨花鲜花',value:'福州本地一级花田三伏茉莉'},{label:'窨制工艺',value:'九次精窨'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:22, name:'金马贺岁', series:'礼盒装', cover:IMG+'/p22.png', images:[IMG+'/p22.png'], intro:'金马贺岁为螺江茗茶节庆主题礼盒系列茉莉花茶。精选福鼎大毫银针为茶坯，配以福州本地优质三伏茉莉鲜花，正花正窨、九窨一提而成。马到成功、金岁贺年之吉意，花香馥郁，滋味醇厚，节庆馈赠佳选。', yunCi:'九窨一提', advantages:['马到成功、金岁贺年之吉意','福鼎大毫银针茶坯','正花正窨，九窨一提','节庆主题礼盒，馈赠佳选'], specs:[{label:'净含量',value:'36克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'九窨一提'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:23, name:'红尘笑', series:'礼盒装', cover:IMG+'/p23.png', images:[IMG+'/p23.png'], intro:'红尘笑为螺江茗茶雅致礼盒系列，以红茶为茶坯，配以福州本地新鲜茉莉鲜花，采用传统茉莉花茶窨制技艺，六次窨制反复提香而成。花香温柔带蜜韵，汤色红艳，滋味甘甜醇爽。礼盒粉色雅致，自饮馈赠皆宜。', yunCi:'六次窨制', advantages:['红茶茶坯，配茉莉鲜花窨制','六次窨制反复提香','花香温柔带蜜韵，甘甜醇爽','粉色雅致礼盒，自饮馈赠皆宜'], specs:[{label:'净含量',value:'30克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'红茶'},{label:'窨花鲜花',value:'福州本地茉莉鲜花'},{label:'窨制工艺',value:'六次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:24, name:'印象福州', series:'礼盒装', cover:IMG+'/p24.png', images:[IMG+'/p24.png'], intro:'印象福州为螺江茗茶城市主题礼盒系列茉莉花茶，以福州城市印象为主题。精选福鼎大毫银针为茶坯，配以福州本地优质三伏茉莉鲜花，五次窨制反复提香而成。大份量礼盒，花香浓郁，滋味醇厚，展示福州茉莉花茶文化魅力，城市伴手馈赠佳选。', yunCi:'五次窨制', advantages:['以福州城市印象为主题','福鼎大毫银针茶坯','五次窨制反复提香','大份量礼盒，城市伴手馈赠佳选'], specs:[{label:'净含量',value:'150克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫银针'},{label:'窨花鲜花',value:'福州本地三伏茉莉鲜花'},{label:'窨制工艺',value:'五次窨制'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] },
+  { id:25, name:'百花仙芽', series:'礼盒装', cover:IMG+'/p25.png', images:[IMG+'/p25.png'], intro:'百花仙芽为螺江茗茶高端木质礼盒系列茉莉花茶。精选福鼎大毫全芽银针为茶坯，经烘青工艺制成特种茶坯，配以福州本地一级花田优质三伏茉莉鲜花，正花正窨、九窨一提而成。针芽匀整，花香鲜灵浓郁，滋味醇厚回甘。木质礼盒配金色茶罐，尊贵典雅，高端馈赠佳选。', yunCi:'九窨一提', advantages:['福鼎大毫全芽银针茶坯','一级花田三伏茉莉鲜花窨制','正花正窨，九窨一提','木质礼盒配金色茶罐，尊贵典雅'], specs:[{label:'净含量',value:'60克'},{label:'包装形式',value:'礼盒装'},{label:'茶坯',value:'福鼎大毫全芽银针'},{label:'窨花鲜花',value:'福州本地一级花田三伏茉莉'},{label:'窨制工艺',value:'九窨一提'},{label:'产地',value:'福建·福州'},{label:'保质期',value:'24个月'},{label:'储存方式',value:'密封、避光、防潮、防异味'}] }
+];
+
+// ===== 页面切换 =====
+var currentPage = 'home';
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.navbar-item').forEach(function(n) { n.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  var navItems = document.querySelectorAll('.navbar-item');
+  for (var i = 0; i < navItems.length; i++) {
+    if (navItems[i].getAttribute('data-page') === name) navItems[i].classList.add('active');
+  }
+  currentPage = name;
+  window.scrollTo(0, 0);
+}
+
+// ===== 产品列表 =====
+var activeSeries = '全部';
+var seriesList = ['全部', '罐装', '礼盒装'];
+
+function renderSeriesBar() {
+  var bar = document.getElementById('seriesBar');
+  bar.innerHTML = '';
+  seriesList.forEach(function(s) {
+    var el = document.createElement('div');
+    el.className = 'series-item' + (s === activeSeries ? ' active' : '');
+    el.textContent = s;
+    el.onclick = function() { activeSeries = s; renderSeriesBar(); renderProductList(); };
+    bar.appendChild(el);
+  });
+}
+
+function renderProductList() {
+  var filtered = activeSeries === '全部' ? PRODUCTS : PRODUCTS.filter(function(p) { return p.series === activeSeries; });
+  var list = document.getElementById('productList');
+  list.innerHTML = '';
+  filtered.forEach(function(p) {
+    var card = document.createElement('div');
+    card.className = 'product-card';
+    card.onclick = function() { showDetail(p.id); };
+    card.innerHTML =
+      '<div class="product-cover">' +
+        '<img class="cover-img" src="' + p.cover + '" alt="' + p.name + '">' +
+        '<div class="cover-series">' + p.series + '</div>' +
+      '</div>' +
+      '<div class="product-info">' +
+        '<div class="product-name">' + p.name + '</div>' +
+        '<div class="product-intro">' + p.intro + '</div>' +
+        '<div class="product-action">' +
+          '<span class="product-spec">' + p.specs[0].value + '</span>' +
+          '<span class="product-more">查看详情 ›</span>' +
+        '</div>' +
+      '</div>';
+    list.appendChild(card);
+  });
+  document.getElementById('productFooter').textContent = '共 ' + filtered.length + ' 款产品 · 螺江茗茶';
+}
+
+// ===== 产品详情 =====
+var detailGalleryIndex = 0;
+var detailImages = [];
+
+function showDetail(id) {
+  var p = PRODUCTS.find(function(x) { return x.id === id; });
+  if (!p) return;
+  detailImages = p.images || [];
+  detailGalleryIndex = 0;
+
+  var html = '<div class="gallery">';
+  if (detailImages.length > 0) {
+    html += '<img class="gallery-img" id="detailGalleryImg" src="' + detailImages[0] + '" onclick="previewImage(0)" alt="">';
+    if (detailImages.length > 1) {
+      html += '<div class="gallery-count" id="galleryCount">1 / ' + detailImages.length + '</div>';
+    }
+  }
+  html += '</div>';
+
+  html += '<div class="title-card">';
+  html += '<span class="title-series">' + p.series + '</span>';
+  html += '<div class="title-name">' + p.name + '</div>';
+  if (p.yunCi) {
+    html += '<div class="title-yunci"><span class="yunci-label">窨制工艺</span><span class="yunci-value">' + p.yunCi + '</span></div>';
+  }
+  html += '</div>';
+
+  html += '<div class="section-title">产品介绍</div>';
+  html += '<div class="card"><div class="intro-text">' + p.intro + '</div></div>';
+
+  html += '<div class="section-title">产品优势</div>';
+  html += '<div class="card">';
+  p.advantages.forEach(function(a, i) {
+    html += '<div class="advantage-item"><div class="advantage-num">' + (i+1) + '</div><div class="advantage-text">' + a + '</div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="section-title">规格信息</div>';
+  html += '<div class="card">';
+  p.specs.forEach(function(s) {
+    html += '<div class="spec-row"><div class="spec-label">' + s.label + '</div><div class="spec-value">' + s.value + '</div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="bottom-note"><div class="note-line">— 以上为产品资料展示，仅供了解 —</div><div class="note-tip">如需了解更多，请联系螺江茗茶</div></div>';
+
+  document.getElementById('detailContent').innerHTML = html;
+  switchPage('detail');
+}
+
+// 图片轮播切换（点击图片区域左半右半翻页）
+function changeGallery(delta) {
+  if (detailImages.length <= 1) return;
+  detailGalleryIndex = (detailGalleryIndex + delta + detailImages.length) % detailImages.length;
+  document.getElementById('detailGalleryImg').src = detailImages[detailGalleryIndex];
+  document.getElementById('galleryCount').textContent = (detailGalleryIndex + 1) + ' / ' + detailImages.length;
+}
+
+// 点击详情大图区域，左半边上一张，右半边下一张
+document.addEventListener('click', function(e) {
+  if (currentPage !== 'detail') return;
+  var img = document.getElementById('detailGalleryImg');
+  if (!img || !img.contains(e.target) && e.target !== img) return;
+  if (detailImages.length <= 1) { previewImage(detailGalleryIndex); return; }
+  var rect = img.getBoundingClientRect();
+  var x = e.clientX - rect.left;
+  if (x < rect.width / 2) { changeGallery(-1); } else { changeGallery(1); }
+}, true);
+
+// ===== 图片预览 =====
+function previewImage(index) {
+  if (detailImages.length === 0) return;
+  document.getElementById('viewerImg').src = detailImages[index];
+  document.getElementById('viewerMask').classList.remove('hidden');
+}
+
+function closeViewer() {
+  document.getElementById('viewerMask').classList.add('hidden');
+}
+
+// ===== 初始化 =====
+renderSeriesBar();
+renderProductList();
+</script>
+</body>
+</html>
